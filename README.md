@@ -19,7 +19,7 @@
 
 | Column          | Type       | Options                        |
 | --------------- | ---------- | ------------------------------ |
-| item            | string     | null: false                    |
+| name            | string     | null: false                    |
 | description     | text       | null: false                    |
 | category_id     | integer    | null: false                    |
 | condition_id    | integer    | null: false                    |
@@ -35,15 +35,15 @@
 
 ## purchasersテーブル
 
-| Column        | Type       | Options                        |
-| ------------- | ---------- | ------------------------------ |
-| post_code     | string     | null: false                    |
-| prefecture_id | integer    | null: false                    |
-| city          | string     | null: false                    |
-| address       | string     | null: false                    |
-| building      | string     |                                |
-| phone         | string     | null: false                    |
-| order         | references | null: false, foreign_key: true |
+| Column    | Type       | Options                        |
+| --------- | ---------- | ------------------------------ |
+| post_code | string     | null: false                    |
+| source_id | integer    | null: false                    |
+| city      | string     | null: false                    |
+| address   | string     | null: false                    |
+| building  | string     |                                |
+| phone     | string     | null: false                    |
+| order     | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :order
