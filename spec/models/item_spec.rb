@@ -7,7 +7,7 @@ RSpec.describe Item, type: :model do
 describe '商品出品機能' do
   context '内容に問題ない場合' do
     it "name,description,price,category_id,condition_id,charge_id,source_id,
-    delivery_day_id,user_id,imageが存在すれば登録できる" do
+    delivery_day_id,imageが存在すれば登録できる" do
       expect(@item).to be_valid
     end
    end
