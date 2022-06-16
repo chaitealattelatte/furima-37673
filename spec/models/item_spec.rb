@@ -24,27 +24,27 @@ describe '商品出品機能' do
       expect(@item.errors.full_messages).to include("Description can't be blank")
     end
     it "category_idが1では登録できない" do
-      @item.category_id = ''
+      @item.category_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Category can't be blank")
     end
     it "condition_idが1では登録できない" do
-      @item.condition_id = ''
+      @item.condition_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Condition can't be blank")
     end
     it "charge_idが1では登録できない" do
-      @item.charge_id = ''
+      @item.charge_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Charge can't be blank")
     end
     it "source_idが1では登録できない" do
-      @item.source_id = ''
+      @item.source_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Source can't be blank")
     end
     it "delivery_day_idが1では登録できない" do
-      @item.delivery_day_id = ''
+      @item.delivery_day_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Delivery day can't be blank")
     end
