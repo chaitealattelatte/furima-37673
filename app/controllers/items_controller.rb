@@ -22,12 +22,19 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  # def edit
-  # @item = Item.find(params[:id])
-  # unless user_signed_in? && current_user.id == @item.user.id
-  # redirect_to action: :index
-  # end
-  # end
+  def edit
+    @item = Item.find(params[:id])
+    redirect_to new_user_session_path unless user_signed_in? && current_user.id == @item.user.id
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      redirect_to action: :show
+    else
+      render :edit
+    end
+  end
 
   private
 
