@@ -2,12 +2,15 @@ require 'rails_helper'
 
 RSpec.describe PurchasersOrder, type: :model do
   before do
-    @purchasers_order = FactoryBot.build(:purchasers_order)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @purchasers_order = FactoryBot.build(:purchasers_order, user_id: @user.id, item_id: @item.id)
+    sleep(0.1)
   end
 
   describe '商品購入機能' do
     context '内容に問題ない場合' do
-      it 'post_code,source_id,city,address,building,phoneが存在すれば登録できる' do
+      it 'post_code,source_id,city,address,building,phone,user_id,item_idが存在すれば登録できる' do
         expect(@purchasers_order).to be_valid
       end
       it 'buildingが存在しなくても登録できる' do
@@ -69,6 +72,16 @@ RSpec.describe PurchasersOrder, type: :model do
       @purchasers_order.valid?
       expect(@purchasers_order.errors.full_messages).to include('Phone は半角数値のみ登録可能です')
     end
+    it 'phoneが9桁以下だったら登録できない' do
+      @purchasers_order.phone = '123456789'
+      @purchasers_order.valid?
+      expect(@purchasers_order.errors.full_messages).to include('Phone は半角数値のみ登録可能です')
+    end
+    it 'phoneが12桁以上だったら登録できない' do
+      @purchasers_order.phone = '123456789101112'
+      @purchasers_order.valid?
+      expect(@purchasers_order.errors.full_messages).to include('Phone は半角数値のみ登録可能です')
+    end
     it 'itemが紐付いていないと保存できないこと' do
       @purchasers_order.item_id = nil
       @purchasers_order.valid?
@@ -78,6 +91,11 @@ RSpec.describe PurchasersOrder, type: :model do
       @purchasers_order.user_id = nil
       @purchasers_order.valid?
       expect(@purchasers_order.errors.full_messages).to include("User can't be blank")
+    end
+    it 'tokenが空では保存できないこと' do
+      @purchasers_order.token = nil
+      @purchasers_order.valid?
+      expect(@purchasers_order.errors.full_messages).to include("Token can't be blank")
     end
   end
 end

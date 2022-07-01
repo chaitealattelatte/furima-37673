@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   before do
-    @order = FactoryBot.create(:order)
-    sleep(1)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @order = FactoryBot.build(:purchasers_order, user_id: @user.id, item_id: @item.id)
   end
 
   describe '商品購入機能' do
@@ -17,12 +18,12 @@ RSpec.describe Order, type: :model do
       it 'itemが紐付いていなければ保存できない' do
         @order.item_id = nil
         @order.valid?
-        expect(@order.errors.full_messages).to include('Item must exist')
+        expect(@order.errors.full_messages).to include("Item can't be blank")
       end
       it 'userが紐付いていなければ保存できない' do
         @order.user_id = nil
         @order.valid?
-        expect(@order.errors.full_messages).to include('User must exist')
+        expect(@order.errors.full_messages).to include("User can't be blank")
       end
     end
   end
