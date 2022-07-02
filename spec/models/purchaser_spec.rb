@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Purchaser, type: :model do
   before do
-    @purchaser = FactoryBot.build(:purchaser)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @purchaser = FactoryBot.build(:purchasers_order, user_id: @user.id, item_id: @item.id)
+    sleep(0.1)
   end
 
   describe '商品購入機能' do
@@ -68,10 +71,15 @@ RSpec.describe Purchaser, type: :model do
       @purchaser.valid?
       expect(@purchaser.errors.full_messages).to include('Phone は半角数値のみ登録可能です')
     end
-    it 'orderが紐付いていなければ登録できない' do
-      @purchaser.order = nil
+    it 'phoneが9桁以下だったら登録できない' do
+      @purchaser.phone = '123456789'
       @purchaser.valid?
-      expect(@purchaser.errors.full_messages).to include('Order must exist')
+      expect(@purchaser.errors.full_messages).to include('Phone は半角数値のみ登録可能です')
+    end
+    it 'phoneが12桁以上だったら登録できない' do
+      @purchaser.phone = '123456789101112'
+      @purchaser.valid?
+      expect(@purchaser.errors.full_messages).to include('Phone は半角数値のみ登録可能です')
     end
   end
 end
